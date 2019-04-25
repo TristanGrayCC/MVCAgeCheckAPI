@@ -46,19 +46,19 @@ namespace DotNetCoreAPI.Services
             }
         }
 
-        public IEnumerable<ProductDto> GetAllProducts()
+        public List<ProductDto> GetAllProducts()
         {
-            return _dalContext.GetProducts.Select(x => ProductFactory.CreateProductDto(x));
+            return _dalContext.GetProducts.Select(x => ProductFactory.CreateProductDto(x)).ToList();
         }
 
-        public IEnumerable<ProductDto> GetAllProductsByCategory(string category)
+        public List<ProductDto> GetAllProductsByCategory(string category)
         {
-            return _dalContext.GetProducts.Where(x => x.Category.Name == category).Select(x => ProductFactory.CreateProductDto(x));
+            return _dalContext.GetProducts.Where(x => x.Category.Name == category).Select(x => ProductFactory.CreateProductDto(x)).ToList();
         }
 
-        public IEnumerable<CategoryDto> GetAllCategories()
+        public List<CategoryDto> GetAllCategories()
         {
-            return _dalContext.GetCategories.Select(x => CategoryFactory.CreateCategoryDto(x));
+            return _dalContext.GetCategories.Select(x => CategoryFactory.CreateCategoryDto(x)).ToList();
         }
     }
 }
