@@ -6,14 +6,14 @@ namespace DotNetCoreAPI
 {
     public class DALContext : DbContext
     {
-
+        public DALContext() { }
 
         public DALContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public IQueryable<Product> GetProducts => Products.Include(x => x.Category);
+        public virtual IQueryable<Product> GetProducts => Products.Include(x => x.Category);
 
         public IQueryable<Category> GetCategories=> Categories;
 
@@ -27,7 +27,7 @@ namespace DotNetCoreAPI
             Products.Remove(product);
         }
 
-        public Category GetCategoryByName(string name)
+        public virtual Category GetCategoryByName(string name)
         {
             return Categories.SingleOrDefault(x => x.Name == name);
         }
