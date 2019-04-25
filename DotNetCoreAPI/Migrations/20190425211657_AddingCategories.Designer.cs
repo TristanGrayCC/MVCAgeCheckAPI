@@ -3,14 +3,16 @@ using DotNetCoreAPI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetCoreAPI.Migrations
 {
     [DbContext(typeof(DALContext))]
-    partial class DALContextModelSnapshot : ModelSnapshot
+    [Migration("20190425211657_AddingCategories")]
+    partial class AddingCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
