@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetCoreAPI\DotNetCoreAPI.csproj" />
+    <ProjectReference Include="..\MVCAgeCheck\MVCAgeCheck.csproj" />
   </ItemGroup>
 
 </Project>
