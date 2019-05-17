@@ -13,14 +13,13 @@ namespace APITest.DatabaseTests
     public class DatabaseTest
     {
         [Fact]
-        public void CreateProduct_AddsToDatabase()
+        public void CreateLogin_AddsToDatabase()
         {
             var options = new DbContextOptionsBuilder<DALContext>()
                 .UseInMemoryDatabase(databaseName: "CreateProductAddsToDatabase")
                 .Options;
 
             var dateTime = new DateTime(2019, 01, 01);
-            var fruit = "Strawberries";
 
             var dateToSearch = new Login
             {
@@ -40,20 +39,19 @@ namespace APITest.DatabaseTests
             // Use a separate instance of the context to verify correct data was saved to database
             using (var context = new DALContext(options))
             {
-                Assert.Equal(1, context.Users.Count());
-                Assert.Equal(fruit, context.Users.Single().Name);
+                Assert.Equal(1, context.Logins.Count());
+                Assert.Equal(dateTime, context.Logins.Single().DateTime);
             }
         }
 
         [Fact]
-        public void GetAllProductsByCategory_ReturnsProductsForCategory()
+        public void GetAllLoginsByUser_ReturnsLoginsForUser()
         {
             var options = new DbContextOptionsBuilder<DALContext>()
-                .UseInMemoryDatabase(databaseName: "GetAllProductsByCategory")
+                .UseInMemoryDatabase(databaseName: "GetAllLoginsByUser")
                 .Options;
 
             var doB = new DateTime(2019, 01, 01);
-            var dateTime = new DateTime(2019, 01, 01);
             var userNameToSearch = "Name";
 
             var listOfUserLogins = new List<DateTime>

@@ -10,7 +10,8 @@ namespace DotNetCoreAPI.Services
             return new UserDto
             {
                 Name = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                DateOfBirth = user.DateOfBirth
             };
         }
 
@@ -19,7 +20,8 @@ namespace DotNetCoreAPI.Services
             return new User
             {
                 Name = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                DateOfBirth = user.DateOfBirth
             };
         }
     }
