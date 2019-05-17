@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DotNetCoreAPI.Models
+namespace MVCAgeCheck.Models
 {
     public class User
     {

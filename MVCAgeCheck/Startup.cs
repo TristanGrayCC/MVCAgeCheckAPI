@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace DotNetCoreAPI
+namespace MVCAgeCheck
 {
     public class Startup
     {

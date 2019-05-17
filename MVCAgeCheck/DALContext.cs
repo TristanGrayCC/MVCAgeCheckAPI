@@ -1,8 +1,8 @@
-﻿using DotNetCoreAPI.Models;
+﻿using MVCAgeCheck.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace DotNetCoreAPI
+namespace MVCAgeCheck
 {
     public class DALContext : DbContext
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DotNetCoreAPI.Models
+namespace MVCAgeCheck.Models
 {
     public class Login
     {

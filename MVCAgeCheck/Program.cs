@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace DotNetCoreAPI
+namespace MVCAgeCheck
 {
     public static class Program
     {

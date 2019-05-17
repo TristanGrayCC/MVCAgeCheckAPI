@@ -1,7 +1,7 @@
-﻿using DotNetCoreAPI.Dtos;
-using DotNetCoreAPI.Models;
+﻿using MVCAgeCheck.Dtos;
+using MVCAgeCheck.Models;
 
-namespace DotNetCoreAPI.Services
+namespace MVCAgeCheck.Services
 {
     public static class LoginFactory
     {

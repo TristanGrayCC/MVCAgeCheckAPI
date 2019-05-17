@@ -1,6 +1,6 @@
-using DotNetCoreAPI.Dtos;
-using DotNetCoreAPI.Models;
-using DotNetCoreAPI.Services;
+using MVCAgeCheck.Dtos;
+using MVCAgeCheck.Models;
+using MVCAgeCheck.Services;
 using System;
 using Xunit;
 

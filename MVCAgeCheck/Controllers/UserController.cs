@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using DotNetCoreAPI.Dtos;
-using DotNetCoreAPI.Services;
+using MVCAgeCheck.Dtos;
+using MVCAgeCheck.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetCoreAPI.Controllers
+namespace MVCAgeCheck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

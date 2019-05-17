@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotNetCoreAPI.Dtos
+namespace MVCAgeCheck.Dtos
 {
     public class LoginDto
     {

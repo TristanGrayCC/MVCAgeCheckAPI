@@ -1,7 +1,7 @@
-using DotNetCoreAPI;
-using DotNetCoreAPI.Dtos;
-using DotNetCoreAPI.Models;
-using DotNetCoreAPI.Services;
+using MVCAgeCheck;
+using MVCAgeCheck.Dtos;
+using MVCAgeCheck.Models;
+using MVCAgeCheck.Services;
 using Moq;
 using System;
 using System.Collections.Generic;

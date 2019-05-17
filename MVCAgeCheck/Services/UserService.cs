@@ -1,9 +1,9 @@
-﻿using DotNetCoreAPI.Dtos;
+﻿using MVCAgeCheck.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNetCoreAPI.Services
+namespace MVCAgeCheck.Services
 {
     public class UserService
     {
