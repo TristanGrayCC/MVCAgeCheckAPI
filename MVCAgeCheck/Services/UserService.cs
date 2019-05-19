@@ -8,84 +8,56 @@ namespace MVCAgeCheck.Services
     public class UserService
     {
         private readonly DALContext _dalContext;
-        private const string success = "Success";
-        private const string failure = "Failed";
 
         public UserService(DALContext context)
         {
             _dalContext = context;
         }
 
-        public string DeleteUser(string name)
+        public bool CreateLoginForUser(UserDto user)
         {
-            var User = _dalContext.GetUsers.Single(x => x.Name == name);
-            try
+            var existingUser = _dalContext.GetUserByNameAndEmail(user.Name, user.Email);
+
+            if (existingUser == null)
+                _dalContext.Users.Add(UserFactory.CreateUser(user));
+
+            else
             {
-                _dalContext.RemoveUser(User);
-                _dalContext.SaveChanges();
-                return success;
+                var login = LoginFactory.CreateLogin(user.Logins.Single());
+                login.User = existingUser;
+                _dalContext.Logins.Add(login);
             }
-            catch
-            {
-                return failure;
-            }
+
+
+            if (UserIsUnder18(user))
+                return false;
+
+            return true;
         }
 
-        public string CreateUser(UserDto UserDto)
+        public bool CheckLoginAttempts(UserDto user)
         {
-            var User = UserFactory.CreateUser(UserDto);
+            var userLogins = GetAllLoginsByUser(user.Name);
 
-            try
-            {
-                _dalContext.AddUser(User);
-                _dalContext.SaveChanges();
-                return success;
-            }
-            catch
-            {
-                return failure;
-            }
-        }
+            var loginsInLastHour = userLogins.Where(x => x.DateTime <= DateTime.Now.AddHours(-1));
 
-        public string DeleteLogin(string name, DateTime date)
-        {
-            var login = _dalContext.GetLogins.Single(x => x.User.Name == name && x.DateTime == date);
-            try
-            {
-                _dalContext.RemoveLogin(login);
-                _dalContext.SaveChanges();
-                return success;
-            }
-            catch
-            {
-                return failure;
-            }
-        }
+            if (loginsInLastHour.Count() > 3)
+                return true;
 
-        public string CreateLogin(LoginDto loginDto)
-        {
-            var login = LoginFactory.CreateLogin(loginDto);
-
-            try
-            {
-                _dalContext.AddLogin(login);
-                _dalContext.SaveChanges();
-                return success;
-            }
-            catch
-            {
-                return failure;
-            }
-        }
-
-        public List<UserDto> GetAllUsers()
-        {
-            return _dalContext.GetUsers.Select(x => UserFactory.CreateUserDto(x)).ToList();
+            return false;
         }
 
         public List<LoginDto> GetAllLoginsByUser(string user)
         {
             return _dalContext.GetLogins.Where(x => x.User.Name == user).Select(x => LoginFactory.CreateLoginDto(x)).ToList();
+        }
+
+        public bool UserIsUnder18(UserDto user)
+        {
+            var dateOfBirth = user.DateOfBirth;
+            var dateOfBirthFor18 = DateTime.Now.AddYears(-18);
+
+            return dateOfBirth <= dateOfBirthFor18;
         }
     }
 }

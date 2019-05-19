@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using MVCAgeCheck.Dtos;
+﻿using MVCAgeCheck.Dtos;
 using MVCAgeCheck.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace MVCAgeCheck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly UserService _userService;
         public UserController(DALContext context)
@@ -17,9 +17,37 @@ namespace MVCAgeCheck.Controllers
 
         // GET api/user
         [HttpGet]
-        public ActionResult<IEnumerable<UserDto>> Get()
+        public ActionResult Login()
         {
-            return _userService.GetAllUsers();
+            var user = new UserDto();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Login([FromBody] UserDto user)
+        {
+            user.Logins.Add(new LoginDto()
+            {
+                DateTime = DateTime.Now
+            });
+
+            var success = _userService.CreateLoginForUser(user);
+
+            if (success)
+            {
+                return Redirect("/");
+            }
+
+            else
+            {
+                var tooManyAttempts = _userService.CheckLoginAttempts(user);
+                if (tooManyAttempts)
+                {
+                    return Redirect("/");
+                }
+            }
+
+            return Redirect("/");
         }
     }
 }

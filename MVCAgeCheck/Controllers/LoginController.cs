@@ -8,7 +8,7 @@ namespace MVCAgeCheck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginsController : ControllerBase
+    public class LoginsController : Controller
     {
         private readonly UserService _userService;
         public LoginsController(DALContext context)
@@ -21,24 +21,6 @@ namespace MVCAgeCheck.Controllers
         public ActionResult<IEnumerable<LoginDto>> Get(string user)
         {
             return _userService.GetAllLoginsByUser(user);
-        }
-
-        // POST api/Logins
-        [HttpPost]
-        public void Post([FromBody] DateTime date)
-        {
-            var newLogin = new LoginDto
-            {
-                DateTime = date
-            };
-            _userService.CreateLogin(newLogin);
-        }
-
-        // DELETE api/Logins/name
-        [HttpDelete("{name}")]
-        public void Delete(string name, DateTime date)
-        {
-            _userService.DeleteLogin(name, date);
         }
     }
 }

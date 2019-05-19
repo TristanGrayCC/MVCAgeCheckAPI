@@ -30,9 +30,16 @@ namespace APITest.DatabaseTests
             using (var context = new DALContext(options))
             {
                 var service = new UserService(context);
-                service.CreateLogin(new LoginDto()
+                service.CreateLoginForUser(new UserDto()
                 {
-                    DateTime = dateToSearch.DateTime
+                    Logins = new List<LoginDto>()
+                    {
+                        new LoginDto()
+                        {
+                            DateTime = dateToSearch.DateTime
+
+                        }
+                    }
                 });
             }
 
