@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Login";
+    Layout = "_Layout";
 }
 
 @using (Html.BeginForm("Login", "User", FormMethod.Post))
@@ -23,8 +24,4 @@
     </div>
 
     <input type="submit" value="Login" />
-}
-
-@section Styles {
-    <link href="@Url.Content("~/Content/Main.css")" rel="stylesheet" type="text/css" />
 }
