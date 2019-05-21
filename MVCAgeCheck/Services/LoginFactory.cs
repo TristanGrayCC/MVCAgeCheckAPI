@@ -9,7 +9,8 @@ namespace MVCAgeCheck.Services
         {
             return new LoginDto
             {
-                DateTime = login.DateTime
+                DateTime = login.DateTime,
+                Successful = login.Successful
             };
         }
 
@@ -17,7 +18,8 @@ namespace MVCAgeCheck.Services
         {
             return new Login
             {
-                DateTime = loginDto.DateTime
+                DateTime = loginDto.DateTime,
+                Successful = loginDto.Successful
             };
         }
     }

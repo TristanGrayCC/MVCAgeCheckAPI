@@ -7,17 +7,18 @@
     <link rel="stylesheet" href="~/css/Main.css" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-            @Html.ActionLink("MVC Age Check", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="page-container">
+        <div>
+            <p class="title">MVC Age Check</p>
+            <img src="~/images/AgeMatchIcon.jpg" class="age-icon" />
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>@DateTime.Now.Year - MVC Age Check Application</p>
-        </footer>
+        <div class="container">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>@DateTime.Now.Year - MVC Age Check Application</p>
+            </footer>
+        </div>
     </div>
 </body>
 </html>

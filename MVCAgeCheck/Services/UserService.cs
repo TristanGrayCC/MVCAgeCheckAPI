@@ -18,6 +18,8 @@ namespace MVCAgeCheck.Services
         {
             var existingUser = _dalContext.GetUserByNameAndEmail(user.Name, user.Email);
 
+            var successful = UserPassesAgeCheck(user);
+
             if (existingUser == null)
                 _dalContext.Users.Add(UserFactory.CreateUser(user));
 
@@ -25,34 +27,36 @@ namespace MVCAgeCheck.Services
             {
                 var login = LoginFactory.CreateLogin(user.Logins.Single());
                 login.User = existingUser;
+                login.Successful = successful;
                 _dalContext.Logins.Add(login);
             }
 
+            _dalContext.SaveChanges();
 
-            if (UserIsUnder18(user))
-                return false;
+            if (successful)
+                return true;
 
-            return true;
+            return false;
         }
 
         public bool CheckLoginAttempts(UserDto user)
         {
             var userLogins = GetAllLoginsByUser(user.Name);
 
-            var loginsInLastHour = userLogins.Where(x => x.DateTime <= DateTime.Now.AddHours(-1));
+            var failedLoginsInLastHour = userLogins.Where(x => x.DateTime <= DateTime.Now.AddHours(-1) && !x.Successful);
 
-            if (loginsInLastHour.Count() > 3)
+            if (failedLoginsInLastHour.Count() > 3)
                 return true;
 
             return false;
         }
 
-        public List<LoginDto> GetAllLoginsByUser(string user)
+        public IEnumerable<LoginDto> GetAllLoginsByUser(string user)
         {
-            return _dalContext.GetLogins.Where(x => x.User.Name == user).Select(x => LoginFactory.CreateLoginDto(x)).ToList();
+            return _dalContext.GetLogins.Where(x => x.User.Name == user).Select(x => LoginFactory.CreateLoginDto(x));
         }
 
-        public bool UserIsUnder18(UserDto user)
+        public bool UserPassesAgeCheck(UserDto user)
         {
             var dateOfBirth = user.DateOfBirth;
             var dateOfBirthFor18 = DateTime.Now.AddYears(-18);

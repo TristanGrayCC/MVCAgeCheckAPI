@@ -14,5 +14,7 @@ namespace MVCAgeCheck.Models
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
+
+        public bool Successful { get; set; }
     }
 }

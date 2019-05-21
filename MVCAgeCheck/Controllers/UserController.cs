@@ -2,6 +2,7 @@
 using MVCAgeCheck.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace MVCAgeCheck.Controllers
 {
@@ -24,18 +25,21 @@ namespace MVCAgeCheck.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login([FromBody] UserDto user)
+        public ActionResult Login([FromForm] UserDto user)
         {
-            user.Logins.Add(new LoginDto()
+            user.Logins = new List<LoginDto>()
             {
-                DateTime = DateTime.Now
-            });
+                new LoginDto()
+                {
+                    DateTime = DateTime.Now
+                }
+            };
 
             var success = _userService.CreateLoginForUser(user);
 
             if (success)
             {
-                return Redirect("/");
+                return RedirectToAction(user.Name, "UserLogins");
             }
 
             else
@@ -43,11 +47,11 @@ namespace MVCAgeCheck.Controllers
                 var tooManyAttempts = _userService.CheckLoginAttempts(user);
                 if (tooManyAttempts)
                 {
-                    return Redirect("/");
+                    return Redirect("/api/LockOut");
                 }
             }
 
-            return Redirect("/");
+            return Redirect("/api/AgeVerificationError");
         }
     }
 }

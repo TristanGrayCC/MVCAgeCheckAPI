@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MVCAgeCheck.Dtos;
 using MVCAgeCheck.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +15,12 @@ namespace MVCAgeCheck.Controllers
             _userService = new UserService(context);
         }
 
-        // GET api/Logins/categories
+        // GET api/Logins/user
         [HttpGet("{user}")]
-        public ActionResult<IEnumerable<LoginDto>> Get(string user)
+        public ActionResult<IEnumerable<LoginDto>> Index(string user)
         {
-            return _userService.GetAllLoginsByUser(user);
+            var logins = _userService.GetAllLoginsByUser(user);
+            return View(logins);
         }
     }
 }

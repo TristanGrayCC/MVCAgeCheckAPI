@@ -1,7 +1,15 @@
-﻿@model MVCAgeCheck.Dtos.LoginDto
+﻿@model IEnumerable<MVCAgeCheck.Dtos.LoginDto>
 
-@using (Html.BeginForm())
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+@foreach (var item in Model)
 {
-    <legend>Log In</legend>
-
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+        </td>
+    </tr>
 }
