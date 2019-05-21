@@ -1,28 +1,32 @@
 ﻿using MVCAgeCheck.Dtos;
 using MVCAgeCheck.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MVCAgeCheck.Services
 {
     public static class UserFactory
     {
-        public static UserDto CreateUserDto(User user)
+        public static User CreateUser(UserDto userDto)
         {
-            return new UserDto
+            var user = new User
             {
-                Name = user.Name,
-                Email = user.Email,
-                DateOfBirth = user.DateOfBirth
+                Name = userDto.Name,
+                Email = userDto.Email,
+                DateOfBirth = userDto.DateOfBirth
             };
-        }
 
-        public static User CreateUser(UserDto user)
-        {
-            return new User
+            if (userDto.Logins?.Count > 0)
             {
-                Name = user.Name,
-                Email = user.Email,
-                DateOfBirth = user.DateOfBirth
-            };
+                user.Logins = new List<Login>();
+                foreach (var loginDto in userDto.Logins)
+                {
+                    var login = LoginFactory.CreateLogin(loginDto);
+                    user.Logins.Add(login);
+                }
+            }
+
+            return user;
         }
     }
 }

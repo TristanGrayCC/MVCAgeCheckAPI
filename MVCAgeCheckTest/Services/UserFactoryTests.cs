@@ -2,34 +2,14 @@ using MVCAgeCheck.Dtos;
 using MVCAgeCheck.Models;
 using MVCAgeCheck.Services;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace APITest.Services
 {
     public class USerFactoryTests
     {
-        [Fact]
-        public void CreateUserDto_CreatesValidDto()
-        {
-            var name = "new user";
-            var doB = new DateTime(2019, 01, 01);
-            var email = "email address";
-
-            var user = new User
-            {
-                Name = name,
-                Email = email,
-                DateOfBirth = doB
-            };
-
-            var dto = UserFactory.CreateUserDto(user);
-
-            Assert.NotNull(dto);
-            Assert.Equal(name, dto.Name);
-            Assert.Equal(doB, dto.DateOfBirth);
-            Assert.Equal(email, dto.Email);
-        }
-
         [Fact]
         public void CreateUser_CreatesValidDbObject()
         {
@@ -50,6 +30,36 @@ namespace APITest.Services
             Assert.Equal(name, dbModel.Name);
             Assert.Equal(doB, dbModel.DateOfBirth);
             Assert.Equal(email, dbModel.Email);
+        }
+
+        [Fact]
+        public void CreateUserWithLogin_CreatesValidDbObjectWithLoginDbo()
+        {
+            var name = "new user";
+            var doB = new DateTime(2019, 01, 01);
+            var email = "email address";
+            var loginDate = new DateTime(2019, 10, 10);
+            var login = new LoginDto()
+            {
+                DateTime = loginDate
+            };
+
+            var userDto = new UserDto
+            {
+                Name = name,
+                Email = email,
+                DateOfBirth = doB,
+                Logins = new List<LoginDto>()
+                {
+                    login
+                }
+            };
+
+            var dbModel = UserFactory.CreateUser(userDto);
+
+            Assert.NotNull(dbModel.Logins);
+            Assert.Equal(typeof(Login), dbModel.Logins.Single().GetType());
+            Assert.Equal(loginDate, dbModel.Logins.Single().DateTime);
         }
     }
 }

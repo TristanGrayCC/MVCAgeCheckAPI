@@ -16,7 +16,7 @@ namespace APITest.DatabaseTests
         public void CreateLogin_AddsToDatabase()
         {
             var options = new DbContextOptionsBuilder<DALContext>()
-                .UseInMemoryDatabase(databaseName: "CreateProductAddsToDatabase")
+                .UseInMemoryDatabase(databaseName: "CreateLoginAddsToDatabase")
                 .Options;
 
             var dateTime = new DateTime(2019, 01, 01);
@@ -26,7 +26,6 @@ namespace APITest.DatabaseTests
                 DateTime = dateTime
             };
 
-            // Run the test against one instance of the context
             using (var context = new DALContext(options))
             {
                 var service = new UserService(context);
@@ -37,13 +36,11 @@ namespace APITest.DatabaseTests
                         new LoginDto()
                         {
                             DateTime = dateToSearch.DateTime
-
                         }
                     }
                 });
             }
 
-            // Use a separate instance of the context to verify correct data was saved to database
             using (var context = new DALContext(options))
             {
                 Assert.Equal(1, context.Logins.Count());
