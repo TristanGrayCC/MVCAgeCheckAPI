@@ -43,7 +43,7 @@ namespace MVCAgeCheck.Services
         {
             var userLogins = GetAllLoginsByUser(user.Name);
 
-            var failedLoginsInLastHour = userLogins.Where(x => x.DateTime <= DateTime.Now.AddHours(-1) && !x.Successful);
+            var failedLoginsInLastHour = userLogins.Where(x => x.DateTime >= DateTime.Now.AddHours(-1) && !x.Successful);
 
             if (failedLoginsInLastHour.Count() > 3)
                 return true;

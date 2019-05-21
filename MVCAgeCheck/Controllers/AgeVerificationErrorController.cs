@@ -8,9 +8,9 @@ namespace MVCAgeCheck.Controllers
     [ApiController]
     public class AgeVerificationErrorController : Controller
     {
-        // GET api/Logins/user
-        [HttpGet("{user}")]
-        public ActionResult<IEnumerable<LoginDto>> Index()
+        // GET api/AgeVerificationError
+        [HttpGet]
+        public ActionResult Index()
         {
             return View();
         }

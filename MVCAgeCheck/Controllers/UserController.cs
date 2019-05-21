@@ -35,20 +35,17 @@ namespace MVCAgeCheck.Controllers
                 }
             };
 
+            var tooManyAttempts = _userService.CheckLoginAttempts(user);
+            if (tooManyAttempts)
+            {
+                return RedirectToAction("Index", "Lockout");
+            }
+
             var success = _userService.CreateLoginForUser(user);
 
             if (success)
             {
                 return RedirectToAction("Index", "UserLogins", new { user = user.Name });
-            }
-
-            else
-            {
-                var tooManyAttempts = _userService.CheckLoginAttempts(user);
-                if (tooManyAttempts)
-                {
-                    return RedirectToAction("Index", "Lockout");
-                }
             }
 
             return RedirectToAction("Index", "AgeVerificationError");

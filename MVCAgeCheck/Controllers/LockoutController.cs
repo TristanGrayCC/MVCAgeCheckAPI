@@ -8,9 +8,9 @@ namespace MVCAgeCheck.Controllers
     [ApiController]
     public class LockoutController : Controller
     {
-        // GET api/Logins/user
-        [HttpGet("{user}")]
-        public ActionResult<IEnumerable<LoginDto>> Index()
+        // GET api/Lockout
+        [HttpGet]
+        public ActionResult Index()
         {
             return View();
         }
