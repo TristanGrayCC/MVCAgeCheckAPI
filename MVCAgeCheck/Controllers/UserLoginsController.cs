@@ -7,10 +7,10 @@ namespace MVCAgeCheck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginsController : Controller
+    public class UserLoginsController : Controller
     {
         private readonly UserService _userService;
-        public LoginsController(DALContext context)
+        public UserLoginsController(DALContext context)
         {
             _userService = new UserService(context);
         }

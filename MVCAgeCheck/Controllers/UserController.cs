@@ -39,7 +39,7 @@ namespace MVCAgeCheck.Controllers
 
             if (success)
             {
-                return RedirectToAction(user.Name, "UserLogins");
+                return RedirectToAction("Index", "UserLogins", new { user = user.Name });
             }
 
             else
