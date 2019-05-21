@@ -21,4 +21,13 @@
     <PackageReference Include="moq" Version="4.10.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\AgeVerificationError\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\UserLogins\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

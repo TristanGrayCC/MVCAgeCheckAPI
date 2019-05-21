@@ -47,11 +47,11 @@ namespace MVCAgeCheck.Controllers
                 var tooManyAttempts = _userService.CheckLoginAttempts(user);
                 if (tooManyAttempts)
                 {
-                    return Redirect("/api/LockOut");
+                    return RedirectToAction("Index", "Lockout");
                 }
             }
 
-            return Redirect("/api/AgeVerificationError");
+            return RedirectToAction("Index", "AgeVerificationError");
         }
     }
 }
