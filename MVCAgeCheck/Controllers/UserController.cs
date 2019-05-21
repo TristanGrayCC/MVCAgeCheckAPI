@@ -18,7 +18,7 @@ namespace MVCAgeCheck.Controllers
 
         // GET api/user
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Index()
         {
             var user = new UserDto();
             return View(user);

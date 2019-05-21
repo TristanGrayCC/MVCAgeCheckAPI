@@ -51,3 +51,22 @@ label {
 .page-container{
     margin: 5%;
 }
+
+.home-button {
+    background-color: #4444ff;
+    border: none;
+    color: white;
+    text-align: center;
+    font-weight: 800;
+    margin: 20px 20px 0px 75px;
+    opacity: 0.6;
+    display: inline-block;
+    cursor: pointer;
+    height: 25px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.error {
+    color: red;
+}
