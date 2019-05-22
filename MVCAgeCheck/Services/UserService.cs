@@ -41,7 +41,7 @@ namespace MVCAgeCheck.Services
 
         public bool CheckLoginAttempts(UserDto user)
         {
-            var userLogins = GetAllLoginsByUser(user.Name);
+            var userLogins = GetAllLoginsByUser(user);
 
             var failedLoginsInLastHour = userLogins.Where(x => x.DateTime >= DateTime.Now.AddHours(-1) && !x.Successful);
 
@@ -51,9 +51,9 @@ namespace MVCAgeCheck.Services
             return false;
         }
 
-        public IEnumerable<LoginDto> GetAllLoginsByUser(string user)
+        public IEnumerable<LoginDto> GetAllLoginsByUser(UserDto user)
         {
-            return _dalContext.GetLogins.Where(x => x.User.Name == user).Select(x => LoginFactory.CreateLoginDto(x));
+            return _dalContext.GetLogins.Where(x => x.User.Name == user.Name && x.User.Email == user.Email).Select(x => LoginFactory.CreateLoginDto(x));
         }
 
         public bool UserPassesAgeCheck(UserDto user)

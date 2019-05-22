@@ -8,7 +8,7 @@ using Xunit;
 
 namespace MVCAgeCheckTest.Services
 {
-    public class USerFactoryTests
+    public class UserFactoryTests
     {
         [Fact]
         public void CreateUser_CreatesValidDbObject()

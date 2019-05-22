@@ -35,6 +35,12 @@ namespace MVCAgeCheckTest.Services
             {
                 new DateTime(2019, 01, 04), new DateTime(2019, 01, 05)
             };
+            
+            var userDto = new UserDto
+            {
+                Name = userNameToSearch,
+                DateOfBirth = doB
+            };
 
             var user = new User
             {
@@ -69,7 +75,7 @@ namespace MVCAgeCheckTest.Services
 
             _context.Setup(x => x.GetLogins).Returns(allLogins.AsQueryable());
 
-            var result = _underTest.GetAllLoginsByUser(userNameToSearch).ToList();
+            var result = _underTest.GetAllLoginsByUser(userDto).ToList();
 
             Assert.NotNull(result);
             Assert.Equal(typeof(LoginDto), result.First().GetType());

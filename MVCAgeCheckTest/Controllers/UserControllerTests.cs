@@ -2,11 +2,11 @@ using MVCAgeCheck;
 using Moq;
 using Xunit;
 using MVCAgeCheck.Controllers;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc;
+using MVCAgeCheck.Dtos;
+using System;
+using MVCAgeCheck.Models;
+using System.Linq;
 
 namespace MVCAgeCheckTest.Controllers
 {
@@ -14,28 +14,98 @@ namespace MVCAgeCheckTest.Controllers
     {
         private readonly UserController _underTest;
         private readonly Mock<DALContext> _context;
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
 
         public UserControllerTests()
         {
             _context = new Mock<DALContext>();
             _underTest = new UserController(_context.Object);
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
-            _client = _server.CreateClient();
         }
 
 
         [Fact]
-        public async Task GetIndex()
+        public void GetIndex()
         {
-            _underTest.ControllerContext.HttpContext = _contextMock.Object;
-            var actionResult = await _underTest.Index();
+            var actionResult = _underTest.Index();
 
-            //Assert
             var viewResult = Assert.IsType<ViewResult>(actionResult);
-            Assert.IsAssignableFrom<Order>(viewResult.ViewData.Model);
+            Assert.IsType<UserDto>(viewResult.ViewData.Model);
+        }
+
+        [Fact]
+        public void Login_Success_RedirectsToUserLoginPage_WithValidUserDetails()
+        {
+            var name = "User name";
+            var email = "User email";
+
+            var userDto = new UserDto()
+            {
+                Name = name,
+                Email = email
+            };
+
+            var actionResult = _underTest.Login(userDto);
+
+            var actionName = "Index";
+            var controllerName = "UserLogins";
+
+            var viewResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal(actionName, viewResult.ActionName);
+            Assert.Equal(controllerName, viewResult.ControllerName);
+            Assert.Equal(name, ((UserDto)viewResult.RouteValues.First().Value).Name);
+            Assert.Equal(email, ((UserDto)viewResult.RouteValues.First().Value).Email);
+        }
+
+        [Fact]
+        public void Login_LockoutError_RedirectsToLockoutPage()
+        {
+            var name = "User name";
+            var email = "User email";
+
+            var userDto = new UserDto()
+            {
+                Name = name,
+                Email = email
+            };
+
+            var user = new User()
+            {
+                Name = name,
+                Email = email
+            };
+            
+            _context.Setup(x => x.GetLogins).Returns(new Login[]
+            {
+                new Login(){ DateTime = DateTime.Now, User = user, Successful = false },
+                new Login(){ DateTime = DateTime.Now, User = user, Successful = false },
+                new Login(){ DateTime = DateTime.Now, User = user, Successful = false },
+                new Login(){ DateTime = DateTime.Now, User = user, Successful = false }
+            }.AsQueryable);
+
+            var actionResult = _underTest.Login(userDto);
+            
+            var actionName = "Index";
+            var controllerName = "Lockout";
+
+            var viewResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal(actionName, viewResult.ActionName);
+            Assert.Equal(controllerName, viewResult.ControllerName);
+        }
+
+        [Fact]
+        public void Login_LockoutError_RedirectsToAgeVerificationErrorPage()
+        {
+            var user = new UserDto()
+            {
+                DateOfBirth = DateTime.Now
+            };
+            var actionResult = _underTest.Login(user);
+
+            var actionName = "Index";
+            var controllerName = "AgeVerificationError";
+
+            var viewResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal(actionName, viewResult.ActionName);
+            Assert.Equal(controllerName, viewResult.ControllerName);
         }
     }
 }

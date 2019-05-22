@@ -67,6 +67,12 @@ namespace MVCAgeCheckTest.DatabaseTests
                 new DateTime(2019, 01, 04), new DateTime(2019, 01, 05)
             };
 
+            var userDto = new UserDto
+            {
+                Name = userNameToSearch,
+                DateOfBirth = doB
+            };
+
             var user = new User
             {
                 Name = userNameToSearch,
@@ -113,7 +119,7 @@ namespace MVCAgeCheckTest.DatabaseTests
             using (var context = new DALContext(options))
             {
                 var service = new UserService(context);
-                var result = service.GetAllLoginsByUser(userNameToSearch);
+                var result = service.GetAllLoginsByUser(userDto);
                 Assert.Equal(3, result.Count());
             }
         }
