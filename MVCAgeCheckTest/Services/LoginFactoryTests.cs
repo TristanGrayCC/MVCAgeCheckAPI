@@ -4,7 +4,7 @@ using MVCAgeCheck.Services;
 using System;
 using Xunit;
 
-namespace APITest.Services
+namespace MVCAgeCheckTest.Services
 {
     public class LoginFactoryTests
     {

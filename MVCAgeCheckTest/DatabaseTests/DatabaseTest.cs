@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace APITest.DatabaseTests
+namespace MVCAgeCheckTest.DatabaseTests
 {
     public class DatabaseTest
     {

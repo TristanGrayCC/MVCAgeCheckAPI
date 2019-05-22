@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace APITest.Services
+namespace MVCAgeCheckTest.Services
 {
     public class USerFactoryTests
     {
