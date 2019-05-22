@@ -4,6 +4,7 @@ using Xunit;
 using MVCAgeCheck.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using MVCAgeCheck.Dtos;
+using System.Collections.Generic;
 
 namespace MVCAgeCheckTest.Controllers
 {
@@ -26,8 +27,7 @@ namespace MVCAgeCheckTest.Controllers
 
             var actionResult = _underTest.Index(userDto);
 
-            var viewResult = Assert.IsType<ViewResult>(actionResult);
-            Assert.IsType<LoginDto>(viewResult.ViewData.Model);
+            Assert.IsAssignableFrom<ActionResult<IEnumerable<LoginDto>>>(actionResult);
         }
     }
 }
