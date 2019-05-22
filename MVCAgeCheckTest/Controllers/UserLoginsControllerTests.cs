@@ -27,7 +27,8 @@ namespace MVCAgeCheckTest.Controllers
 
             var actionResult = _underTest.Index(userDto);
 
-            Assert.IsAssignableFrom<ActionResult<IEnumerable<LoginDto>>>(actionResult);
+            var viewResult = Assert.IsType<ViewResult>(actionResult);
+            Assert.IsAssignableFrom<IEnumerable<LoginDto>>(viewResult.ViewData.Model);
         }
     }
 }

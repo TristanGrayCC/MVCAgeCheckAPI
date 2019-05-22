@@ -21,7 +21,10 @@ namespace MVCAgeCheck.Services
             var successful = UserPassesAgeCheck(user);
 
             if (existingUser == null)
+            {
+                user.Logins.Single().Successful = successful;
                 _dalContext.Users.Add(UserFactory.CreateUser(user));
+            }
 
             else
             {

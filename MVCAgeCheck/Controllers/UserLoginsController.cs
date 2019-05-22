@@ -17,7 +17,7 @@ namespace MVCAgeCheck.Controllers
 
         // GET api/Logins/user
         [HttpGet("{user}")]
-        public ActionResult<IEnumerable<LoginDto>> Index(UserDto user)
+        public ViewResult Index(UserDto user)
         {
             var logins = _userService.GetAllLoginsByUser(user);
             return View(logins);
