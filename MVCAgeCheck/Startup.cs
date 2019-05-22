@@ -57,9 +57,8 @@ namespace MVCAgeCheck
             app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{controller=UserLogins}/{action=Get}/{id?}");
-                routes.MapRoute("lockout", "{controller=Lockout}/{action=Get}");
-                routes.MapRoute("error", "{controller=AgeVerificationError}/{action=Get}");
+                routes.MapRoute("default", "{controller}/{action}/{user?}/{email?}",
+                     defaults: new { controller = "UserLogins", action = "Index" });
             });
         }
     }

@@ -47,11 +47,11 @@ namespace MVCAgeCheckTest.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(actionResult);
             Assert.Equal(actionName, viewResult.ActionName);
             Assert.Equal(controllerName, viewResult.ControllerName);
-            Assert.Equal(user, ((UserDto)viewResult.RouteValues.First().Value).Name);
-            Assert.Equal(email, ((UserDto)viewResult.RouteValues.First().Value).Email);
+            Assert.Equal(user, viewResult.RouteValues["user"]);
+            Assert.Equal(email, viewResult.RouteValues["email"]);
 
-            var loginActionResult = _userLoginsController.Index(userDto);
-            var model = Assert.IsAssignableFrom<IEnumerable<LoginDto>>(loginActionResult.ViewData.Model);
+            var loginActionResult = _userLoginsController.Index(userDto.Name, userDto.Email);
+            var model = Assert.IsAssignableFrom<IEnumerable<LoginDto>>(((ViewResult)loginActionResult).ViewData.Model);
             Assert.Single(model);
             Assert.IsAssignableFrom<IEnumerable<LoginDto>>(model);
             Assert.True(model.Single().Successful);

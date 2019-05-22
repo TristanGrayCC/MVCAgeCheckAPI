@@ -75,7 +75,7 @@ namespace MVCAgeCheckTest.Services
 
             _context.Setup(x => x.GetLogins).Returns(allLogins.AsQueryable());
 
-            var result = _underTest.GetAllLoginsByUser(userDto).ToList();
+            var result = _underTest.GetAllLoginsByUser(userDto.Name, userDto.Email).ToList();
 
             Assert.NotNull(result);
             Assert.Equal(typeof(LoginDto), result.First().GetType());

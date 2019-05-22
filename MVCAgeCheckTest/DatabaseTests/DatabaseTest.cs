@@ -119,7 +119,7 @@ namespace MVCAgeCheckTest.DatabaseTests
             using (var context = new DALContext(options))
             {
                 var service = new UserService(context);
-                var result = service.GetAllLoginsByUser(userDto);
+                var result = service.GetAllLoginsByUser(userDto.Name, userDto.Email);
                 Assert.Equal(3, result.Count());
             }
         }

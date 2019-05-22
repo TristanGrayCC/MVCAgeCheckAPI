@@ -45,7 +45,7 @@ namespace MVCAgeCheck.Controllers
 
             if (success)
             {
-                return RedirectToAction("Index", "UserLogins", new { user = user });
+                return RedirectToAction("Index", "UserLogins", new { user = user.Name, email = user.Email });
             }
 
             return RedirectToAction("Index", "AgeVerificationError");

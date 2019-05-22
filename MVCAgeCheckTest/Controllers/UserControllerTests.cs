@@ -51,8 +51,8 @@ namespace MVCAgeCheckTest.Controllers
             var viewResult = Assert.IsType<RedirectToActionResult>(actionResult);
             Assert.Equal(actionName, viewResult.ActionName);
             Assert.Equal(controllerName, viewResult.ControllerName);
-            Assert.Equal(name, ((UserDto)viewResult.RouteValues.First().Value).Name);
-            Assert.Equal(email, ((UserDto)viewResult.RouteValues.First().Value).Email);
+            Assert.Equal(name, viewResult.RouteValues["user"]);
+            Assert.Equal(email, viewResult.RouteValues["email"]);
         }
 
         [Fact]
